@@ -1,8 +1,8 @@
 import express from "express";
-import { currentUserRouter } from "./routes/current-user";
-import { signinUser } from "./routes/signin";
-import { signoutUser } from "./routes/signout";
-import { signupUser } from "./routes/signup";
+import { currentUserRouter } from "./routes/current-user.ts"
+import { signinUser } from "./routes/login.ts";
+import { signoutUser } from "./routes/logout.ts";
+import { signupUser } from "./routes/register.ts";
 import { errorHandler } from "../middleware/error-handler";
 import { NotFound } from "../errors/not-found-error";
 
