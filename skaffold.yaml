@@ -1,0 +1,20 @@
+apiVersion: skaffold/v4beta11
+kind: Config
+deploy:
+  kubectl:
+    remoteManifests:
+      - ./k8s/*
+build:
+  # local:
+  #   push: true
+  googleCloudBuild:
+    projectId:  ticket-app-443308
+  artifacts:
+    - image: us.gcr.io/ticket-app-443308/auth
+      context: auth
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - dest: .
+            src: 'src/**/*.ts'
