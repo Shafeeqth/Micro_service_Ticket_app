@@ -19,7 +19,7 @@ app.get("*", () => {
   throw new NotFound();
 });
 
-app.use(errorHandler);
+app.use(errorHandler); 
 
 app.listen(3000, () => {
   console.log("Listening at post: 3000!");
