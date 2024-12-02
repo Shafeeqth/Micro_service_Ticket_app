@@ -14,14 +14,14 @@ router.post(
       .isLength({ max: 20, min: 4 })
       .withMessage("Password must be between 4 and 5 characters"),
   ],
-  (req: Request, res: Response): any => {
+  async (req: Request, res: Response): Promise<any> => {
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
       throw new RequestValidationError(errors.array());
     }
     const { email, password } = req.body;
-    throw new DatabaseConnectionError() ;
+    throw new DatabaseConnectionError();
 
     res.send("Hello");
   }
