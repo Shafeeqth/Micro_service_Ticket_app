@@ -13,6 +13,7 @@ declare global {
 
 let mongo: MongoMemoryServer;
 beforeAll(async () => {
+  console.log(process.env.NODE_ENV)
   process.env.JWT_SECRET = "secret";
   try {
     mongo = await MongoMemoryServer.create();
