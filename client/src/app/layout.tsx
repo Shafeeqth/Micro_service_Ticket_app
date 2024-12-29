@@ -1,17 +1,11 @@
-import type { Metadata } from "next";
-import localFont from "next/font/local";
-import "./globals.css";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
+import 'bootstrap/dist/css/bootstrap.css';
+import type { GetServerSidePropsContext, Metadata } from "next";
+// import localFont from "next/font/local";
+import "./globals.css";
+import { getServerSideProps } from './page';
+import buildClient from './api/build-client';
+
 
 export const metadata: Metadata = {
   title: "Ticket app",
@@ -26,10 +20,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`antialiased`}
       >
         {children}
       </body>
     </html>
   );
+}
+
+export function getServerSideProps(context: GetServerSidePropsContext) {
+  const client = buildClient(context)
+
 }
