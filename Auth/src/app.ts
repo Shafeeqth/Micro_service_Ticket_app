@@ -1,31 +1,31 @@
-import express from "express";
-import "express-async-errors";
-import { currentUserRouter } from "./routes/current-user.ts";
-import { signinUser } from "./routes/login.ts";
-import { signoutUser } from "./routes/logout.ts";
-import { signupUser } from "./routes/register.ts";
-import { errorHandler } from "./middleware/error-handler";
-import { NotFoundError } from "./errors/not-found-error";
-import cookieSession from "cookie-session";
+import express from 'express';
+import 'express-async-errors';
+import { json } from 'body-parser';
+import cookieSession from 'cookie-session';
+import { errorHandler, NotFoundError } from '@mdshafeeq-repo/ticketing-common';
+
+import { currentUserRouter } from './routes/current-user';
+import { signinRouter } from './routes/signin';
+import { signoutRouter } from './routes/signout';
+import { signupRouter } from './routes/signup';
 
 const app = express();
-
-app.set("trust proxy", true);
-
-app.use(express.json());
+app.set('trust proxy', true);
+app.use(json());
 app.use(
   cookieSession({
-    secure: process.env.NODE_ENV !== "test",
     signed: false,
+    // secure: process.env.NODE_ENV !== 'test',
+    secure: false,
   })
 );
 
 app.use(currentUserRouter);
-app.use(signinUser);
-app.use(signoutUser);
-app.use(signupUser);
+app.use(signinRouter);
+app.use(signoutRouter);
+app.use(signupRouter);
 
-app.all("*", async () => {
+app.all('*', async (req, res) => {
   throw new NotFoundError();
 });
 
