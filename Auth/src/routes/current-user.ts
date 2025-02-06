@@ -1,15 +1,10 @@
-import express, { Request, Response } from "express";
-import { currentUser, IUserPayload } from "../middleware/current-user";
-import { requireAuth } from "../middleware/require-ath";
+import express from 'express';
+import { currentUser } from '@mdshafeeq-repo/ticketing-common';
 
 const router = express.Router();
 
-router.get(
-  "/api/users/currentuser",
-  currentUser,
-  (req: Request, res: Response): any => {
-    return res.status(200).send({ currentUser: req.currentUser || null });
-  }
-);
+router.get('/api/users/currentuser', currentUser, (req, res) => {
+  res.send({ currentUser: req.currentUser || null });
+});
 
 export { router as currentUserRouter };
