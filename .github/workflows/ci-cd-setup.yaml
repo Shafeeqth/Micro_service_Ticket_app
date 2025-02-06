@@ -43,6 +43,10 @@ jobs:
       - name: run test for orders
         if: contains(github.event.head_commit.message, 'orders/')
         run: cd auth && npm run test:ci
+        
+      - name: run test for auth
+        if: contains(github.event.head_commit.message, 'auth/')
+        run: cd auth && npm run test:ci
 
  
   deploy: 
