@@ -1,64 +1,64 @@
-name: CI pipeline
+# name: CI pipeline
 
-on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
-    paths:
-      - "orders/**"
-      - "tickets/**"
-      - "Auth/**"
-      - "skaffold.yaml"
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: checkout
-        uses: actions/checkout@v3
+# on:
+#   push:
+#     branches:
+#       - main
+#   pull_request:
+#     branches:
+#       - main
+#     paths:
+#       - "orders/**"
+#       - "tickets/**"
+#       - "Auth/**"
+#       - "skaffold.yaml"
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: checkout
+#         uses: actions/checkout@v3
 
-      - name: setup node
-        uses: actions/setup-node@v3
-        with:
-          node-version: "16"
+#       - name: setup node
+#         uses: actions/setup-node@v3
+#         with:
+#           node-version: "16"
 
-      - name: install dependencies for order
-        if: contains(github.event.head_commit.message, 'orders/')
-        run: cd tickets && npm install
+#       - name: install dependencies for order
+#         if: contains(github.event.head_commit.message, 'orders/')
+#         run: cd tickets && npm install
 
-      - name: install dependencies for tickets
-        if: contains(github.event.head_commit.message, 'tickets/')
-        run: cd tickets && npm install
+#       - name: install dependencies for tickets
+#         if: contains(github.event.head_commit.message, 'tickets/')
+#         run: cd tickets && npm install
 
-      - name: install dependencies for auth
-        if: contains(github.event.head_commit.message, 'auth/')
-        run: cd auth && npm install
+#       - name: install dependencies for auth
+#         if: contains(github.event.head_commit.message, 'auth/')
+#         run: cd auth && npm install
       
-      - name: run test for tickets
-        if: contains(github.event.head_commit.message, 'tickets/')
-        run: cd auth && npm run test:ci
+#       - name: run test for tickets
+#         if: contains(github.event.head_commit.message, 'tickets/')
+#         run: cd auth && npm run test:ci
         
-      - name: run test for orders
-        if: contains(github.event.head_commit.message, 'orders/')
-        run: cd auth && npm run test:ci
+#       - name: run test for orders
+#         if: contains(github.event.head_commit.message, 'orders/')
+#         run: cd auth && npm run test:ci
         
-      - name: run test for auth
-        if: contains(github.event.head_commit.message, 'auth/')
-        run: cd auth && npm run test:ci
+#       - name: run test for auth
+#         if: contains(github.event.head_commit.message, 'auth/')
+#         run: cd auth && npm run test:ci
 
  
-  deploy: 
-        runs-on: self-hosted
-        needs: build
-        steps:
-            - name: checkout
-              uses: actions/checkout@v3
+#   deploy: 
+#         runs-on: self-hosted
+#         needs: build
+#         steps:
+#             - name: checkout
+#               uses: actions/checkout@v3
             
-            - name: setup skaffold
-              run: skaffold version
+#             - name: setup skaffold
+#               run: skaffold version
             
-            - name: deploy to k8s 
-              run : skaffold dev
+#             - name: deploy to k8s 
+#               run : skaffold dev
    
